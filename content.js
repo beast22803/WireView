@@ -88,11 +88,31 @@ function createOverlay() {
         <table id="uam-table">
           <thead>
             <tr>
-              <th><span class="material-icons">schedule</span> Time</th>
-              <th><span class="material-icons">http</span> Method</th>
-              <th><span class="material-icons">link</span> URL</th>
-              <th><span class="material-icons">info</span> Status</th>
-              <th><span class="material-icons">timer</span> Duration</th>
+              <th>
+                <div class="flex-box">
+                  <span class="material-icons">schedule</span> Time
+                </div>
+              </th>
+              <th>
+                <div class="flex-box">
+                  <span class="material-icons">http</span> Method
+                </div>
+              </th>
+              <th>
+                <div class="flex-box">
+                  <span class="material-icons">link</span> URL
+                </div>
+              </th>
+              <th>
+                <div class="flex-box">
+                  <span class="material-icons">info</span> Status
+                </div>
+              </th>
+              <th>
+                <div class="flex-box">
+                  <span class="material-icons">timer</span> Duration
+                </div>
+              </th>
             </tr>
           </thead>
           <tbody id="uam-tbody"></tbody>
@@ -196,6 +216,12 @@ function createOverlay() {
 
     .uam-mini-badge.has-count {
       transform: scale(1);
+    }
+
+    .flex-box {
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     @keyframes pulse {
