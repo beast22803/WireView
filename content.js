@@ -26,7 +26,7 @@ function createOverlay() {
   overlay.innerHTML = `
     <!-- Minimized floating button -->
     <div class="uam-minimized" id="uam-minimized">
-      <div class="uam-mini-icon">
+      <div class="uam-mini-icon uam-gradient-border">
         <span class="material-icons">network_check</span>
       </div>
       <div class="uam-mini-badge" id="uam-mini-badge">0</div>
@@ -36,7 +36,7 @@ function createOverlay() {
     <div class="uam-panel" id="uam-panel">
       <div class="uam-header">
         <div class="uam-title-section">
-          <span class="material-icons uam-main-icon">monitor_heart</span>
+          <span class="material-icons uam-main-icon uam-gradient-border">monitor_heart</span>
           <span class="uam-title">API Monitor</span>
           <div class="uam-stats">
             <span class="uam-count" id="uam-count">0 requests</span>
@@ -93,7 +93,6 @@ function createOverlay() {
               <th><span class="material-icons">link</span> URL</th>
               <th><span class="material-icons">info</span> Status</th>
               <th><span class="material-icons">timer</span> Duration</th>
-              <th><span class="material-icons">more_vert</span></th>
             </tr>
           </thead>
           <tbody id="uam-tbody"></tbody>
@@ -140,24 +139,37 @@ function createOverlay() {
 
     /* Minimized floating button */
     .uam-minimized {
-      position: relative;
-      width: 56px;
-      height: 56px;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      border-radius: 50%;
-      box-shadow: 0 4px 20px rgba(102, 126, 234, 0.4);
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      transform: scale(1);
-      animation: pulse 2s infinite;
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        z-index: 999999;
+        width: 56px;
+        height: 56px;
+        background: linear-gradient(to top, #00c6fb, #005bea);
+        border-radius: 50%;
+        box-shadow: 0 4px 20px rgb(198, 243, 255);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        transform: scale(1);
+        animation: pulse 2s infinite;
+    }
+
+    .uam-gradient-border {
+        border: 2px solid transparent;
+        border-radius: 50%;
+        background: linear-gradient(white, white) padding-box, linear-gradient(to top, #00c6fb, #005bea) border-box;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 4px;
     }
 
     .uam-minimized:hover {
       transform: scale(1.1);
-      box-shadow: 0 6px 25px rgba(102, 126, 234, 0.6);
+      box-shadow: 0 6px 25px rgb(198, 243, 255);
     }
 
     .uam-mini-icon .material-icons {
@@ -187,9 +199,9 @@ function createOverlay() {
     }
 
     @keyframes pulse {
-      0% { box-shadow: 0 4px 20px rgba(102, 126, 234, 0.4); }
-      50% { box-shadow: 0 4px 20px rgba(102, 126, 234, 0.6), 0 0 0 10px rgba(102, 126, 234, 0.1); }
-      100% { box-shadow: 0 4px 20px rgba(102, 126, 234, 0.4); }
+      0% { box-shadow: 0 4px 20px rgb(198, 243, 255) }
+      50% { box-shadow: 0 4px 20px rgb(198, 243, 255, 0.6), 0 0 0 10px rgb(198, 243, 255, 0.1); }
+      100% { box-shadow: 0 4px 20px rgb(198, 243, 255) }
     }
 
     /* Full panel */
@@ -214,13 +226,13 @@ function createOverlay() {
     }
 
     .uam-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 16px 20px;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: white;
-      cursor: move;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 16px 20px;
+        background: linear-gradient(to top, #00c6fb, #005bea);
+        color: white;
+        cursor: move;
     }
 
     .uam-title-section {
@@ -562,28 +574,16 @@ function createRow(entry) {
       : "uam-status-error";
 
   tr.innerHTML = `
-    <td>${new Date(entry.startedAt).toLocaleTimeString()}</td>
-    <td><span class="${methodClass}">${escapeHtml(
+      <td>${new Date(entry.startedAt).toLocaleTimeString()}</td>
+      <td><span class="${methodClass}">${escapeHtml(
     entry.method || "UNKNOWN"
   )}</span></td>
-    <td title="${escapeHtml(entry.url || "")}">${escapeHtml(
+      <td title="${escapeHtml(entry.url || "")}">${escapeHtml(
     (entry.url || "").slice(0, 40)
   )}${(entry.url || "").length > 40 ? "…" : ""}</td>
-    <td class="${statusClass}">${entry.status || "…"}</td>
-    <td>${entry.duration ? entry.duration.toFixed(2) + "ms" : "…"}</td>
-    <td>
-      <button class="uam-action-btn" title="View Details">
-        <span class="material-icons">visibility</span>
-      </button>
-    </td>
-  `;
-
-  // Add click handler to the action button
-  const actionBtn = tr.querySelector(".uam-action-btn");
-  actionBtn.addEventListener("click", (e) => {
-    e.stopPropagation();
-    showDetailModal(entry);
-  });
+      <td class="${statusClass}">${entry.status || "…"}</td>
+      <td>${entry.duration ? entry.duration.toFixed(2) + "ms" : "…"}</td>
+    `;
 
   // Add row click handler
   tr.addEventListener("click", () => showDetailModal(entry));
