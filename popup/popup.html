@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Universal API Monitor Popup</title>
+    <link rel="stylesheet" href="popup.css" />
+</head>
+
+<body>
+    <h3>API Monitor</h3>
+    <button id="clearBtn">Clear Logs</button>
+    <button id="exportBtn">Export Logs</button>
+    <select id="originFilter"></select>
+    <table id="logTable">
+        <thead>
+            <tr>
+                <th>Time</th>
+                <th>Method</th>
+                <th>URL</th>
+                <th>Status</th>
+                <th>Duration</th>
+            </tr>
+        </thead>
+        <tbody id="logBody"></tbody>
+    </table>
+    <script src="popup.js"></script>
+</body>
+
+</html>

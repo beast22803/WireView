@@ -1,0 +1,30 @@
+#uam-overlay {
+     font-family: monospace;
+     font-size: 12px;
+     border: 1px solid #ccc;
+     background: white;
+     width: 500px;
+     max-height: 300px;
+     overflow-y: auto;
+     position: fixed;
+     bottom: 0;
+     right: 0;
+     z-index: 999999;
+}
+
+#uam-overlay table {
+     width: 100%;
+     border-collapse: collapse;
+}
+
+#uam-overlay th,
+#uam-overlay td {
+     border: 1px solid #ddd;
+     padding: 4px;
+     text-align: left;
+}
+
+#uam-overlay th {
+     background: #f0f0f0;
+     cursor: pointer;
+}
